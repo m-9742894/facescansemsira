@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekod Kehadiran - FaceAttendance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-face-smile"></i>
+                <span>FaceAttendance</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fas fa-home"></i> Utama</a></li>
+                <li><a href="register.html"><i class="fas fa-user-plus"></i> Daftar</a></li>
+                <li><a href="attendance.html"><i class="fas fa-camera"></i> Kehadiran</a></li>
+                <li><a href="records.html" class="active"><i class="fas fa-history"></i> Rekod</a></li>
+                <li><a href="profile.html"><i class="fas fa-user-circle"></i> Profil</a></li>
+            </ul>
+            <div class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1><i class="fas fa-history"></i> Rekod Kehadiran</h1>
+            <p>Lihat dan urus rekod kehadiran.</p>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-group">
+                <label><i class="fas fa-calendar"></i> Tarikh:</label>
+                <input type="date" id="filter-date" class="filter-input">
+            </div>
+            <div class="filter-group">
+                <label><i class="fas fa-building"></i> Jabatan:</label>
+                <select id="filter-department" class="filter-input">
+                    <option value="">Semua Jabatan</option>
+                    <option value="IT">Teknologi Maklumat</option>
+                    <option value="HR">Sumber Manusia</option>
+                    <option value="Finance">Kewangan</option>
+                    <option value="Marketing">Pemasaran</option>
+                    <option value="Student">Pelajar</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label><i class="fas fa-user"></i> Nama:</label>
+                <input type="text" id="filter-name" placeholder="Cari nama..." class="filter-input">
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-primary" onclick="applyFilters()">
+                    <i class="fas fa-filter"></i> Tapis
+                </button>
+                <button class="btn btn-outline" onclick="resetFilters()">
+                    <i class="fas fa-redo"></i> Set Semula
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Summary -->
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="summary-icon blue">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="summary-info">
+                    <span class="label">Jumlah Rekod</span>
+                    <span class="value" id="total-records">0</span>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon green">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="summary-info">
+                    <span class="label">Hadir Hari Ini</span>
+                    <span class="value" id="today-records">0</span>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon purple">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="summary-info">
+                    <span class="label">Purata Harian</span>
+                    <span class="value" id="avg-daily">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Actions -->
+        <div class="export-actions">
+            <button class="btn btn-success" onclick="exportToCSV()">
+                <i class="fas fa-file-csv"></i> Export CSV
+            </button>
+            <button class="btn btn-success" onclick="exportToExcel()">
+                <i class="fas fa-file-excel"></i> Export Excel
+            </button>
+            <button class="btn btn-outline" onclick="printRecords()">
+                <i class="fas fa-print"></i> Cetak
+            </button>
+        </div>
+
+        <!-- Records Table -->
+        <div class="table-container">
+            <table class="records-table" id="records-table">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Nama</th>
+                        <th>No. ID</th>
+                        <th>Jabatan</th>
+                        <th>Tarikh</th>
+                        <th>Masa</th>
+                        <th>Status</th>
+                        <th>Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody id="records-body">
+                    <!-- Dynamic content -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <button class="page-btn" onclick="changePage('prev')" id="prev-page">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="page-info" id="page-info">Halaman 1 dari 1</span>
+            <button class="page-btn" onclick="changePage('next')" id="next-page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="delete-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Sahkan Padaman</h3>
+                <button class="close-modal" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Anda pasti mahu memadam rekod kehadiran ini?</p>
+                <p class="text-danger">Tindakan ini tidak boleh dibatalkan.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Batal</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">Padam</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/records.js"></script>
+</body>
+</html>
