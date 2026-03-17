@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambil Kehadiran - FaceAttendance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-face-smile"></i>
+                <span>FaceAttendance</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fas fa-home"></i> Utama</a></li>
+                <li><a href="register.html"><i class="fas fa-user-plus"></i> Daftar</a></li>
+                <li><a href="attendance.html" class="active"><i class="fas fa-camera"></i> Kehadiran</a></li>
+                <li><a href="records.html"><i class="fas fa-history"></i> Rekod</a></li>
+                <li><a href="profile.html"><i class="fas fa-user-circle"></i> Profil</a></li>
+            </ul>
+            <div class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1><i class="fas fa-camera"></i> Ambil Kehadiran</h1>
+            <p>Scan wajah anda untuk merekod kehadiran.</p>
+        </div>
+
+        <div class="attendance-container">
+            <!-- Status Card -->
+            <div class="status-card" id="attendance-status-card">
+                <div class="status-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="status-message">
+                    <h3>Sedia untuk scan</h3>
+                    <p>Pastikan pencahayaan mencukupi</p>
+                </div>
+            </div>
+
+            <!-- Camera Section -->
+            <div class="camera-main">
+                <div class="camera-wrapper">
+                    <video id="attendance-video" autoplay playsinline></video>
+                    <canvas id="overlay-canvas"></canvas>
+                    
+                    <!-- Loading Overlay -->
+                    <div class="loading-overlay" id="loading-overlay" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Memproses...</p>
+                    </div>
+
+                    <!-- Detection Box -->
+                    <div class="detection-box" id="detection-box">
+                        <div class="detection-corner top-left"></div>
+                        <div class="detection-corner top-right"></div>
+                        <div class="detection-corner bottom-left"></div>
+                        <div class="detection-corner bottom-right"></div>
+                    </div>
+                </div>
+
+                <div class="camera-controls">
+                    <button class="btn btn-primary" onclick="startAttendance()" id="start-btn">
+                        <i class="fas fa-play"></i> Mula Scan
+                    </button>
+                    <button class="btn btn-danger" onclick="stopAttendance()" id="stop-btn" style="display: none;">
+                        <i class="fas fa-stop"></i> Berhenti
+                    </button>
+                    <button class="btn btn-outline" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i> Skrin Penuh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Today's Attendance -->
+            <div class="today-attendance">
+                <div class="section-header">
+                    <h2><i class="fas fa-list"></i> Kehadiran Hari Ini</h2>
+                    <span class="badge" id="today-count">0 orang</span>
+                </div>
+                
+                <div class="attendance-grid" id="attendance-grid">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+
+            <!-- Success Notification -->
+            <div class="notification success" id="success-notification" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>Kehadiran Direkod!</strong>
+                    <p id="notification-detail"></p>
+                </div>
+                <button class="close-btn" onclick="hideNotification()">×</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/attendance.js"></script>
+</body>
+</html>
