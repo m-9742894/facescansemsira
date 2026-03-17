@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Wajah - FaceAttendance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-face-smile"></i>
+                <span>FaceAttendance</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fas fa-home"></i> Utama</a></li>
+                <li><a href="register.html" class="active"><i class="fas fa-user-plus"></i> Daftar</a></li>
+                <li><a href="attendance.html"><i class="fas fa-camera"></i> Kehadiran</a></li>
+                <li><a href="records.html"><i class="fas fa-history"></i> Rekod</a></li>
+                <li><a href="profile.html"><i class="fas fa-user-circle"></i> Profil</a></li>
+            </ul>
+            <div class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1><i class="fas fa-user-plus"></i> Pendaftaran Wajah Baru</h1>
+            <p>Sila daftarkan wajah anda untuk membolehkan sistem mengenali anda.</p>
+        </div>
+
+        <div class="register-container">
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+                <div class="step active" id="step1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Maklumat Diri</div>
+                </div>
+                <div class="step" id="step2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Capture Wajah</div>
+                </div>
+                <div class="step" id="step3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Pengesahan</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Personal Info -->
+            <div class="step-content active" id="step1-content">
+                <div class="info-form">
+                    <div class="form-group">
+                        <label for="fullname"><i class="fas fa-user"></i> Nama Penuh</label>
+                        <input type="text" id="fullname" placeholder="Masukkan nama penuh" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id-number"><i class="fas fa-id-card"></i> No. Kad Pengenalan</label>
+                        <input type="text" id="id-number" placeholder="Contoh: 990101-10-1234" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="email" placeholder="nama@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department"><i class="fas fa-building"></i> Jabatan/Kelas</label>
+                        <select id="department" required>
+                            <option value="">Pilih Jabatan/Kelas</option>
+                            <option value="IT">Teknologi Maklumat</option>
+                            <option value="HR">Sumber Manusia</option>
+                            <option value="Finance">Kewangan</option>
+                            <option value="Marketing">Pemasaran</option>
+                            <option value="Student">Pelajar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="position"><i class="fas fa-briefcase"></i> Jawatan/Tingkatan</label>
+                        <input type="text" id="position" placeholder="Contoh: Pengurus, Tingkatan 5">
+                    </div>
+                </div>
+                <div class="form-navigation">
+                    <button class="btn btn-primary" onclick="nextStep(2)">
+                        Seterusnya <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Face Capture -->
+            <div class="step-content" id="step2-content">
+                <div class="camera-section">
+                    <div class="camera-container">
+                        <video id="register-video" autoplay playsinline></video>
+                        <canvas id="register-canvas"></canvas>
+                        <div class="camera-overlay">
+                            <div class="face-guide"></div>
+                            <p class="guide-text">Pastikan wajah berada dalam bulatan</p>
+                        </div>
+                    </div>
+                    
+                    <div class="capture-controls">
+                        <button class="btn btn-outline" onclick="toggleCamera()">
+                            <i class="fas fa-sync-alt"></i> Tukar Kamera
+                        </button>
+                        <button class="btn btn-primary" onclick="captureFace()" id="capture-btn">
+                            <i class="fas fa-camera"></i> Capture Wajah
+                        </button>
+                    </div>
+
+                    <div class="capture-preview" id="capture-preview" style="display: none;">
+                        <h3>Preview</h3>
+                        <img id="preview-image" alt="Preview">
+                        <div class="preview-actions">
+                            <button class="btn btn-outline" onclick="retakePhoto()">
+                                <i class="fas fa-redo"></i> Ambil Semula
+                            </button>
+                            <button class="btn btn-success" onclick="nextStep(3)">
+                                <i class="fas fa-check"></i> Gunakan Ini
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Confirmation -->
+            <div class="step-content" id="step3-content">
+                <div class="confirmation-card">
+                    <i class="fas fa-check-circle success-icon"></i>
+                    <h2>Pendaftaran Berjaya!</h2>
+                    
+                    <div class="info-summary">
+                        <div class="info-item">
+                            <span class="label">Nama:</span>
+                            <span class="value" id="confirm-name"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">No. ID:</span>
+                            <span class="value" id="confirm-id"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Jabatan:</span>
+                            <span class="value" id="confirm-dept"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Tarikh Daftar:</span>
+                            <span class="value" id="confirm-date"></span>
+                        </div>
+                    </div>
+
+                    <div class="summary-actions">
+                        <a href="attendance.html" class="btn btn-primary">
+                            <i class="fas fa-camera"></i> Ambil Kehadiran
+                        </a>
+                        <a href="index.html" class="btn btn-outline">
+                            <i class="fas fa-home"></i> Ke Utama
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/register.js"></script>
+</body>
+</html>
