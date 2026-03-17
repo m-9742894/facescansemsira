@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FaceAttendance - Sistem Kehadiran Pintar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-face-smile"></i>
+                <span>FaceAttendance</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active"><i class="fas fa-home"></i> Utama</a></li>
+                <li><a href="register.html"><i class="fas fa-user-plus"></i> Daftar</a></li>
+                <li><a href="attendance.html"><i class="fas fa-camera"></i> Kehadiran</a></li>
+                <li><a href="records.html"><i class="fas fa-history"></i> Rekod</a></li>
+                <li><a href="profile.html"><i class="fas fa-user-circle"></i> Profil</a></li>
+            </ul>
+            <div class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Sistem Kehadiran Wajah Pintar</h1>
+                <p>Rekod kehadiran dengan mudah, cepat dan selamat menggunakan teknologi pengenalan wajah terkini.</p>
+                <div class="hero-buttons">
+                    <a href="register.html" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Daftar Wajah Baru
+                    </a>
+                    <a href="attendance.html" class="btn btn-outline">
+                        <i class="fas fa-camera"></i> Ambil Kehadiran
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <i class="fas fa-face-smile-wink"></i>
+            </div>
+        </section>
+
+        <!-- Stats Cards -->
+        <section class="stats-section">
+            <h2>Ringkasan Hari Ini</h2>
+            <div class="stats-grid" id="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="stat-info">
+                        <h3 id="total-registered">0</h3>
+                        <p>Jumlah Daftar</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="stat-info">
+                        <h3 id="total-present">0</h3>
+                        <p>Hadir Hari Ini</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <div class="stat-info">
+                        <h3 id="avg-time">-</h3>
+                        <p>Purata Masa</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar"></i>
+                    <div class="stat-info">
+                        <h3 id="total-days">0</h3>
+                        <p>Hari Beroperasi</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section class="recent-section">
+            <h2>Kehadiran Terkini</h2>
+            <div class="recent-list" id="recent-attendance">
+                <!-- Dynamic content -->
+            </div>
+            <a href="records.html" class="view-all">Lihat Semua <i class="fas fa-arrow-right"></i></a>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
